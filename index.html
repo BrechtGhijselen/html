@@ -251,10 +251,10 @@
       }
       .inner-clock-face {
         position: absolute;
-        top: 5%;
-        left: 5%;
-        width: 90%;
-        height: 90%;
+        top: 3.75%;
+        left: 3.75%;
+        width: 92.5%;
+        height: 92.5%;
         background: white;
         -webkit-border-radius: 100%;
         -moz-border-radius: 100%;
@@ -291,10 +291,11 @@
       .inner-clock-face::before {
         content: "";
         position: absolute;
-        top: 49.8%;
+        top: 50%;
         left: 50%;
-        width: 10px;
-        height: 10px;
+        transform: translate(-50%, -50%);
+        width: 18px;
+        height: 18px;
         border-radius: 18px;
         /* margin-left: -9px;
         margin-top: -6px; */
@@ -303,64 +304,65 @@
       }
 
       .hand {
+        position: absolute;
+
         width: 50%;
-        right: 49.5%;
+        right: 50%;
         height: 6px;
         background: black;
-        position: absolute;
         top: 50%;
 
         border-radius: 1px;
         transform-origin: 100%;
-        transform: rotate(90deg);
+        /* transform: rotate(90deg); */
         transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
       }
 
       .hand.hour-hand {
         width: 30%;
         z-index: 3;
+        height: 8px;
       }
 
       .hand.min-hand {
         height: 3px;
         z-index: 10;
         width: 40%;
+        height: 5px;
       }
 
       .hand.second-hand {
-        background: #ff0000;
-        width: 47%;
+        background: black;
+        width: 45%;
         height: 3px;
         z-index: 22;
       }
 
       .hand.month-hand {
-        background: blue;
+        background: black;
         width: 20%;
-        height: 9px;
+        height: 15px;
       }
       .hand.doy-hand {
-        background: green;
+        background: black;
         width: 25%;
-        height: 6px;
+        height: 10px;
       }
 
       .outer-clock-face span {
         z-index: 3;
         position: absolute;
         transform-origin: 50%;
-        transform-box: view-box;
 
         transform: rotate(calc(30deg * var(--i)));
         -webkit-transform: rotate(calc(30deg * var(--i)));
-        inset: 50px;
+        inset: 30px;
 
         text-align: center;
       }
 
       .outer-clock-face span b {
         z-index: 3;
-        transform-box: content-box;
         
         font-family: Arial, Helvetica, sans-serif;
         transform: rotate(calc(-30deg * var(--i)));
@@ -374,8 +376,6 @@
         z-index: 3;
         width: 30px;
         height: 30px;
-        transform-style: flat;
-        transform-box: content-box;
 
         transform: rotate(calc(-30deg * var(--i)));
         -webkit-transform: rotate(calc(-30deg * var(--i)));
@@ -464,17 +464,16 @@
         const now = new Date();
 
         const seconds = now.getSeconds();
-        const secondsDegrees = (seconds / 60) * 360 + 90;
+        const secondsDegrees = (seconds / 60) * 360 + 270;
         secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
-
         const mins = now.getMinutes();
         const minsDegrees = (mins / 60) * 360 + (seconds / 60) * 6 + 90;
         minsHand.style.transform = `rotate(${minsDegrees}deg)`;
 
         const hour = now.getHours();
-        const hourDegrees = (hour / 12) * 360 + (mins / 60) * 30 + 90;
+        const hourDegrees = (hour / 24) * 360 + (mins / 60) * 360/24 + 270;
         hourHand.style.transform = `rotate(${hourDegrees}deg)`;
-
+        console.log(hourDegrees);
         let start = new Date(now.getFullYear(), 0, 0);
         let diff =
           now -
