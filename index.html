@@ -50,15 +50,15 @@
       .outer-clock-face::before,
       .outer-clock-face::after,
       .outer-clock-face .marking {
-        content: "";
+        /* content: "";
         position: absolute;
         width: 2px;
         height: 102%;
         background: black;
         transform-origin: center;
-        /* z-index: 0; */
+
         left: 50%;
-        z-index: 0;
+        z-index: 0; */
       }
 
       .outer-clock-face .marking {
@@ -329,44 +329,41 @@
       }
 
       .hand.hour-hand {
-        width: 30%;
+        width: 35.625vh;
         z-index: 30;
-        height: 8px;
-        visibility: hidden;
+        height: 3px;
 
       }
 
       .hand.min-hand {
         height: 3px;
         z-index: 10;
-        width: 40%;
-        height: 5px;
+        width: 39.58vh;
+        height: 2px;
         z-index: 22;
 
       }
 
       .hand.second-hand {
         background: black;
-        width: 45%;
+        width: 43.54vh;
         height: 1px;
-        visibility: hidden;
 
         z-index: 22;
       }
 
       .hand.month-hand {
-        background: green;
+        background: black;
         z-index: 3;
-        width: 70%;
-        height: 10px;
+        width: 100%;
+        height: 5px;
 
-        border-radius: 0 16px 16px 0;
+        /* border-radius: 0 16px 16px 0; */
       }
       .hand.doy-hand {
         background: black;
-        width: 10%;
-        height: 10px;
-        visibility: hidden;
+        width: 31.66667vh;
+        height: 4px;
 
         z-index: 22;
 
@@ -416,7 +413,7 @@
         <div class="hand second-hand"></div>
         <div class="hand month-hand"></div>
         <div class="hand doy-hand"></div>
-        <div class="marking marking-one"></div>
+        <!-- <div class="marking marking-one"></div>
         <div class="marking marking-two"></div>
         <div class="marking marking-three"></div>
         <div class="marking marking-four"></div>
@@ -440,14 +437,14 @@
         <div class="marking marking-21"></div>
         <div class="marking marking-22"></div>
         <div class="marking marking-23"></div>
-        <div class="marking marking-24"></div>
+        <div class="marking marking-24"></div> -->
 
         <div class="inner-clock-face2"></div>
         <div class="inner-clock-face3"></div>
         <div class="inner-clock-face4"></div>
 
         <div class="inner-clock-face"></div>
-        <span style="--i: 1"><b>7</b></span>
+        <!-- <span style="--i: 1"><b>7</b></span>
         <span style="--i: 2"><b>8</b></span>
         <span style="--i: 3.04"><b>9</b></span>
         <span style="--i: 4"><b>1</b></span>
@@ -458,7 +455,7 @@
         <span style="--i: 8.96"><b>3</b></span>
         <span style="--i: 10"><b>4</b></span>
         <span style="--i: 11"><b>5</b></span>
-        <span style="--i: 12"><b>6</b></span>
+        <span style="--i: 12"><b>6</b></span> -->
         <!-- <div class="numbers">
           <span style="--i: 1"><img src="power-off-solid.svg" /></span>
           <span style="--i: 2"><img src="power-off-solid.svg" /></span>
@@ -491,14 +488,14 @@
 
         const seconds = now.getSeconds();
         const secondsDegrees = (seconds / 60) * 360 + 270;
-        secondHand.style.transform = `translate(-50%, 10px) rotate(${secondsDegrees}deg)`;
+        secondHand.style.transform = `translate(0%, 8px) rotate(${secondsDegrees}deg)`;
         const mins = now.getMinutes();
         const minsDegrees = (mins / 60) * 360 + (seconds / 60) * 6 + 90;
-        minsHand.style.transform = `translate(0%, 250%)`;
+        minsHand.style.transform = `translate(0%, 8.5px) rotate(${minsDegrees}deg)`;
 
         const hour = now.getHours();
         const hourDegrees = (hour / 24) * 360 + ((mins / 60) * 360) / 24 + 270;
-        hourHand.style.transform = `translate(-0%, 10px) rotate(${hourDegrees}deg)`;
+        hourHand.style.transform = `translate(0%, 9px) rotate(${hourDegrees}deg)`;
         let start = new Date(now.getFullYear(), 0, 0);
         let diff =
           now -
@@ -506,20 +503,21 @@
           (start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000;
         let oneDay = 1000 * 60 * 60 * 24;
         let day = Math.floor(diff / oneDay);
+        let dayOfYear;
         if (day < 4) {
           day = 365 + day - 3;
         } else {
-          let dayOfYear = day - 4;
+          dayOfYear = day - 4;
         }
         const doyDegrees =
           (dayOfYear % 12) * (360 / 12) + 270 + (hour / 24) * (360 / 12);
-        doyHand.style.transform = `translate(-0%, 10px) rotate(${doyDegrees}deg)`;
+        doyHand.style.transform = `translate(0%, 10px)  rotate(${doyDegrees}deg)`;
 
         const month = now.getMonth() + 1;
         const date = now.getDate();
         const monthDegrees =
           (month / 12) * 360 + 270 + (date / 31) * (360 / 12);
-        monthHand.style.transform = `translate(-0%, 10px) rotate(${monthDegrees}deg)`;
+        monthHand.style.transform = `translate(0%, 10px) rotate(${monthDegrees}deg)`;
       }
 
       setInterval(setDate, 1000);
