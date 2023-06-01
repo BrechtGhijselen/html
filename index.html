@@ -253,8 +253,8 @@
         position: absolute;
         top: 3.75%;
         left: 3.75%;
-        width: 92.5%;
-        height: 92.5%;
+        width: 91.7%;
+        height: 91.7%;
         background: white;
         -webkit-border-radius: 100%;
         -moz-border-radius: 100%;
@@ -288,6 +288,19 @@
         z-index: 1;
       }
 
+      .inner-clock-face4 {
+        position: absolute;
+        top: 1.25%;
+        left: 1.25%;
+        width: 91.7%;
+        height: 97.5%;
+        background: white;
+        -webkit-border-radius: 100%;
+        -moz-border-radius: 100%;
+        border-radius: 100%;
+        z-index: 0;
+      }
+
       .inner-clock-face::before {
         content: "";
         position: absolute;
@@ -298,6 +311,7 @@
         border-radius: 18px;
         /* margin-left: -9px;
         margin-top: -6px; */
+        visibility: hidden;
         background: red;
         z-index: 23;
       }
@@ -307,12 +321,10 @@
 
         width: 50%;
         background: black;
-        top: 50.5%;
+        bottom: 50%;
         right: 50%;
 
         transform-origin: center right;
-
-        /* transform: rotate(90deg); */
         transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
       }
 
@@ -320,6 +332,8 @@
         width: 30%;
         z-index: 30;
         height: 8px;
+        visibility: hidden;
+
       }
 
       .hand.min-hand {
@@ -328,12 +342,15 @@
         width: 40%;
         height: 5px;
         z-index: 22;
+
       }
 
       .hand.second-hand {
         background: black;
         width: 45%;
-        height: 3px;
+        height: 1px;
+        visibility: hidden;
+
         z-index: 22;
       }
 
@@ -342,13 +359,17 @@
         z-index: 3;
         width: 70%;
         height: 10px;
+
         border-radius: 0 16px 16px 0;
       }
       .hand.doy-hand {
         background: black;
         width: 10%;
         height: 10px;
+        visibility: hidden;
+
         z-index: 22;
+
       }
 
       .outer-clock-face span {
@@ -423,6 +444,7 @@
 
         <div class="inner-clock-face2"></div>
         <div class="inner-clock-face3"></div>
+        <div class="inner-clock-face4"></div>
 
         <div class="inner-clock-face"></div>
         <span style="--i: 1"><b>7</b></span>
@@ -469,14 +491,14 @@
 
         const seconds = now.getSeconds();
         const secondsDegrees = (seconds / 60) * 360 + 270;
-        secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
+        secondHand.style.transform = `translate(-50%, 10px) rotate(${secondsDegrees}deg)`;
         const mins = now.getMinutes();
         const minsDegrees = (mins / 60) * 360 + (seconds / 60) * 6 + 90;
-        minsHand.style.transform = `rotate(${minsDegrees}deg)`;
+        minsHand.style.transform = `translate(0%, 250%)`;
 
         const hour = now.getHours();
         const hourDegrees = (hour / 24) * 360 + ((mins / 60) * 360) / 24 + 270;
-        hourHand.style.transform = `rotate(${hourDegrees}deg)`;
+        hourHand.style.transform = `translate(-0%, 10px) rotate(${hourDegrees}deg)`;
         let start = new Date(now.getFullYear(), 0, 0);
         let diff =
           now -
@@ -491,13 +513,13 @@
         }
         const doyDegrees =
           (dayOfYear % 12) * (360 / 12) + 270 + (hour / 24) * (360 / 12);
-        doyHand.style.transform = `rotate(${doyDegrees}deg)`;
+        doyHand.style.transform = `translate(-0%, 10px) rotate(${doyDegrees}deg)`;
 
         const month = now.getMonth() + 1;
         const date = now.getDate();
         const monthDegrees =
           (month / 12) * 360 + 270 + (date / 31) * (360 / 12);
-        monthHand.style.transform = `rotate(${monthDegrees}deg)`;
+        monthHand.style.transform = `translate(-0%, 10px) rotate(${monthDegrees}deg)`;
       }
 
       setInterval(setDate, 1000);
