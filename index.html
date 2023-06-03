@@ -251,10 +251,11 @@
       }
       .inner-clock-face {
         position: absolute;
-        top: 3.75%;
-        left: 3.75%;
-        width: 91.7%;
-        height: 91.7%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 91.666667%;
+        height: 91.666667%;
         background: white;
         -webkit-border-radius: 100%;
         -moz-border-radius: 100%;
@@ -306,13 +307,12 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        width: 25px;
-        height: 25px;
+
         border-radius: 18px;
         /* margin-left: -9px;
         margin-top: -6px; */
-        visibility: hidden;
-        background: red;
+        visibility: visible;
+        background: black;
         z-index: 23;
       }
 
@@ -321,10 +321,10 @@
 
         width: 50%;
         background: black;
-        bottom: 50%;
-        right: 50%;
+        top: 50%;
+        left: 50%;
 
-        transform-origin: center right;
+        transform-origin: center left;
         transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
       }
 
@@ -332,7 +332,6 @@
         width: 35.625vh;
         z-index: 30;
         height: 3px;
-
       }
 
       .hand.min-hand {
@@ -341,7 +340,6 @@
         width: 39.58vh;
         height: 2px;
         z-index: 22;
-
       }
 
       .hand.second-hand {
@@ -366,7 +364,6 @@
         height: 4px;
 
         z-index: 22;
-
       }
 
       .outer-clock-face span {
@@ -396,7 +393,7 @@
         width: 30px;
         height: 30px;
 
-        transform: rotate(calc(-30deg * var(--i)));
+        transform: translate(-50%, -50%) rotate(calc(-30deg * var(--i)));
         -webkit-transform: rotate(calc(-30deg * var(--i)));
         display: inline-block;
         text-align: center;
@@ -413,6 +410,7 @@
         <div class="hand second-hand"></div>
         <div class="hand month-hand"></div>
         <div class="hand doy-hand"></div>
+
         <!-- <div class="marking marking-one"></div>
         <div class="marking marking-two"></div>
         <div class="marking marking-three"></div>
@@ -438,6 +436,7 @@
         <div class="marking marking-22"></div>
         <div class="marking marking-23"></div>
         <div class="marking marking-24"></div> -->
+       
 
         <div class="inner-clock-face2"></div>
         <div class="inner-clock-face3"></div>
@@ -479,23 +478,49 @@
       const monthHand = document.querySelector(".month-hand");
       const doyHand = document.querySelector(".doy-hand");
 
-      function leapyear(year) {
+      const isLeapyear = (year) => {
         return year % 100 === 0 ? year % 400 === 0 : year % 4 === 0;
-      }
-
-      function setDate() {
+      };
+      const setDate = () => {
         const now = new Date();
 
         const seconds = now.getSeconds();
-        const secondsDegrees = (seconds / 60) * 360 + 270;
-        secondHand.style.transform = `translate(0%, 8px) rotate(${secondsDegrees}deg)`;
-        const mins = now.getMinutes();
-        const minsDegrees = (mins / 60) * 360 + (seconds / 60) * 6 + 90;
-        minsHand.style.transform = `translate(0%, 8.5px) rotate(${minsDegrees}deg)`;
-
         const hour = now.getHours();
-        const hourDegrees = (hour / 24) * 360 + ((mins / 60) * 360) / 24 + 270;
-        hourHand.style.transform = `translate(0%, 9px) rotate(${hourDegrees}deg)`;
+        const mins = now.getMinutes();
+        const ms = now.getMilliseconds();
+
+        // console.log("seconden", seconds);
+        // console.log("milliseconden", ms);
+        const secondenKommagetal = seconds + ms / 1000;
+        // console.log("kommagetal", secondenKommagetal);
+        const secondenOp144 = (secondenKommagetal / 60) * 144;
+        const secondenGraden = Math.floor(secondenOp144) * 2.5;
+        // const secondsDegrees = (seconds / 60) * 360 + 270;
+        secondHand.style.transform = `translate(0px, 8px) rotate(${
+          secondenGraden + 90
+          // 0
+        }deg)`;
+        // console.log("144", secondenOp144);
+        // console.log("graden", secondenGraden);
+
+        const minutenKommaGetal = (mins * 60 + seconds) / 60;
+        const minutenOp144 = (minutenKommaGetal / 60) * 144;
+        const minutenGraden = Math.floor(minutenOp144) * 2.5;
+        // console.log("minuten", minutenKommaGetal);
+        // console.log(minutenOp144);
+        // console.log("graden", minutenGraden);
+
+        minsHand.style.transform = `translate(0px, 8px) rotate(${
+          minutenGraden + 90
+          // 0
+        }deg)`;
+
+        const hourDegrees = (hour / 24) * 360 + ((mins / 60) * 360) / 24;
+        hourHand.style.transform = `translate(0px, 8px) rotate(${
+          hourDegrees + 90
+          // 0
+        }deg)`;
+
         let start = new Date(now.getFullYear(), 0, 0);
         let diff =
           now -
@@ -506,21 +531,26 @@
         let dayOfYear;
         if (day < 4) {
           day = 365 + day - 3;
+        } else if (day < 4 && isLeapyear(now.getFullYear())) {
+          day = 366 + day - 3;
         } else {
-          dayOfYear = day - 4;
+          dayOfYear = day - 3;
         }
         const doyDegrees =
-          (dayOfYear % 12) * (360 / 12) + 270 + (hour / 24) * (360 / 12);
-        doyHand.style.transform = `translate(0%, 10px)  rotate(${doyDegrees}deg)`;
+          (dayOfYear % 12) * (360 / 12) + (hour / 24) * (360 / 12);
+        doyHand.style.transform = `translate(0px, 8px)  rotate(${
+          // doyDegrees + 90
+          0
+        }deg)`;
 
         const month = now.getMonth() + 1;
         const date = now.getDate();
         const monthDegrees =
-          (month / 12) * 360 + 270 + (date / 31) * (360 / 12);
-        monthHand.style.transform = `translate(0%, 10px) rotate(${monthDegrees}deg)`;
-      }
+          (month / 12) * 360 + (date / 31) * (360 / 12);
+        monthHand.style.transform = `translate(0px, 8px) rotate(${monthDegrees + 90}deg)`;
+      };
 
-      setInterval(setDate, 1000);
+      setInterval(setDate, 416.666667);
 
       setDate();
     </script>
