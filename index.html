@@ -323,7 +323,7 @@
         background: black;
         top: 50%;
         left: 50%;
-
+        clip-path: polygon(0 60%, 0 40%, 100% 9%, 100% 100%);
         transform-origin: center left;
         transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
       }
@@ -362,7 +362,11 @@
         background: black;
         width: 31.66667vh;
         height: 4px;
-
+        /* width: 0;
+        height: 0;
+        border-left: 200px solid transparent;
+        border-right: 200px solid transparent;
+        border-bottom: 300px solid black; */
         z-index: 22;
       }
 
@@ -436,7 +440,6 @@
         <div class="marking marking-22"></div>
         <div class="marking marking-23"></div>
         <div class="marking marking-24"></div> -->
-       
 
         <div class="inner-clock-face2"></div>
         <div class="inner-clock-face3"></div>
@@ -456,18 +459,54 @@
         <span style="--i: 11"><b>5</b></span>
         <span style="--i: 12"><b>6</b></span> -->
         <div class="numbers">
-          <span style="--i: 1"><img src="assets/wetransfer_tekens-klok_2023-06-05_1252/GeReDuserd AnAlfaBet/X7_O7.png" /></span>
-          <span style="--i: 2"><img src="assets/wetransfer_tekens-klok_2023-06-05_1252/GeReDuserd AnAlfaBet/X8_O8.png" /></span>
-          <span style="--i: 3.03"><img src="assets/wetransfer_tekens-klok_2023-06-05_1252/GeReDuserd AnAlfaBet/X9_O9.png" /></span>
-          <span style="--i: 4"><img src="assets/wetransfer_tekens-klok_2023-06-05_1252/GeReDuserd AnAlfaBet/X10_Oᘔ.png" /></span>
-          <span style="--i: 5"><img src="assets/wetransfer_tekens-klok_2023-06-05_1252/GeReDuserd AnAlfaBet/X11_OƐ.png" /></span>
-          <span style="--i: 6"><img src="assets/wetransfer_tekens-klok_2023-06-05_1252/GeReDuserd AnAlfaBet/X12_O10.png" /></span>
-          <span style="--i: 7"><img src="assets/wetransfer_tekens-klok_2023-06-05_1252/GeReDuserd AnAlfaBet/X1_O1.png" /></span>
-          <span style="--i: 8"><img src="assets/wetransfer_tekens-klok_2023-06-05_1252/GeReDuserd AnAlfaBet/X2_O2.png" /></span>
-          <span style="--i: 8.97"><img src="assets/wetransfer_tekens-klok_2023-06-05_1252/GeReDuserd AnAlfaBet/X3_O3.png" /></span>
-          <span style="--i: 10"><img src="assets/wetransfer_tekens-klok_2023-06-05_1252/GeReDuserd AnAlfaBet/X4_O4.png" /></span>
-          <span style="--i: 11"><img src="assets/wetransfer_tekens-klok_2023-06-05_1252/GeReDuserd AnAlfaBet/X5_O5.png" /></span>
-          <span style="--i: 12.005"><img src="assets/wetransfer_tekens-klok_2023-06-05_1252/GeReDuserd AnAlfaBet/X6_O6.png" /></span>
+          <span style="--i: 1"
+            ><img
+              src="assets/wetransfer_tekens-klok_2023-06-05_1252/GeReDuserd AnAlfaBet/X7_O7.png"
+          /></span>
+          <span style="--i: 2"
+            ><img
+              src="assets/wetransfer_tekens-klok_2023-06-05_1252/GeReDuserd AnAlfaBet/X8_O8.png"
+          /></span>
+          <span style="--i: 3.03"
+            ><img
+              src="assets/wetransfer_tekens-klok_2023-06-05_1252/GeReDuserd AnAlfaBet/X9_O9.png"
+          /></span>
+          <span style="--i: 4"
+            ><img
+              src="assets/wetransfer_tekens-klok_2023-06-05_1252/GeReDuserd AnAlfaBet/X10_Oᘔ.png"
+          /></span>
+          <span style="--i: 5"
+            ><img
+              src="assets/wetransfer_tekens-klok_2023-06-05_1252/GeReDuserd AnAlfaBet/X11_OƐ.png"
+          /></span>
+          <span style="--i: 6"
+            ><img
+              src="assets/wetransfer_tekens-klok_2023-06-05_1252/GeReDuserd AnAlfaBet/X12_O10.png"
+          /></span>
+          <span style="--i: 7"
+            ><img
+              src="assets/wetransfer_tekens-klok_2023-06-05_1252/GeReDuserd AnAlfaBet/X1_O1.png"
+          /></span>
+          <span style="--i: 8"
+            ><img
+              src="assets/wetransfer_tekens-klok_2023-06-05_1252/GeReDuserd AnAlfaBet/X2_O2.png"
+          /></span>
+          <span style="--i: 8.97"
+            ><img
+              src="assets/wetransfer_tekens-klok_2023-06-05_1252/GeReDuserd AnAlfaBet/X3_O3.png"
+          /></span>
+          <span style="--i: 10"
+            ><img
+              src="assets/wetransfer_tekens-klok_2023-06-05_1252/GeReDuserd AnAlfaBet/X4_O4.png"
+          /></span>
+          <span style="--i: 11"
+            ><img
+              src="assets/wetransfer_tekens-klok_2023-06-05_1252/GeReDuserd AnAlfaBet/X5_O5.png"
+          /></span>
+          <span style="--i: 12.005"
+            ><img
+              src="assets/wetransfer_tekens-klok_2023-06-05_1252/GeReDuserd AnAlfaBet/X6_O6.png"
+          /></span>
         </div>
       </div>
     </div>
@@ -545,9 +584,10 @@
 
         const month = now.getMonth() + 1;
         const date = now.getDate();
-        const monthDegrees =
-          (month / 12) * 360 + (date / 31) * (360 / 12);
-        monthHand.style.transform = `translate(0px, 8px) rotate(${monthDegrees + 90}deg)`;
+        const monthDegrees = (month / 12) * 360 + (date / 31) * (360 / 12);
+        monthHand.style.transform = `translate(0px, 8px) rotate(${
+          monthDegrees + 90
+        }deg)`;
       };
 
       setInterval(setDate, 416.666667);
